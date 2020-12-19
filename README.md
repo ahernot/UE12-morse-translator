@@ -9,4 +9,6 @@ Project due 2021.01.24
 <br><br>
 
 ## To do
-* Begin project
+* v0.1:
+* v0.3: Build WAV conversion
+* v2: Use json files or equivalent for conversion maps storage (or archive using boost::archive::text_oarchive)
