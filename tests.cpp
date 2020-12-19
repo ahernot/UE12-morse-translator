@@ -3,6 +3,8 @@ g++ -std=c++11 tests.cpp -o t
 ./t
 */
 
+// in convert_char std::map can't be const for some reason...
+
 #include <iostream>
 #include <fstream> // file rw
 #include <sstream>
@@ -35,15 +37,22 @@ void generate_map () {
 */
 
 
-void fill_map (std::map<char, std::string>& conversion_map) {
+
+/**
+ * Fill a string->string conversion map with data from a TXT file
+ *
+ * @param conversion_map Conversion map to fill
+ * @param fill_filepath Path of file containing map information
+ */
+void fill_conversion_map (std::map<std::string, std::string>& conversion_map, const std::string& fill_filepath) {
 
     // Open the conversion file
     std::ifstream file_in;
-    file_in.open("resources/conversion.txt");
+    file_in.open(fill_filepath);
 
     // Initialise the loop variables
     std::string line;
-    char letter; std::string sequence;
+    std::string letter; std::string sequence;
 
     // Get the first line
     file_in >> letter >> sequence;
@@ -67,32 +76,58 @@ void fill_map (std::map<char, std::string>& conversion_map) {
     // Close the conversion file
     file_in.close();
 
-
-    /*
-    // Read word by word (space as separator) - uses pointer
-    file_in.open("output.txt");
-    std::string word;
-    file_in >> word; std::cout << word << std::endl; // word 1
-    file_in >> word; std::cout << word << std::endl; // word 2
-    std::cout << file_in.eof() << std::endl; // end of file (bool)
-    file_in.close();*/
-
 };
 
 
 
+/**
+ * Convert string to morse code binary representation
+ *
+ * @param c String (character) to convert
+ * @param conversion_map Conversion map from strings to morse code binary representation in string form
+ * @param preconversion_map Preconversion map to convert to accepted strings for morse code conversion
+ * @return Morse code binary representation of string input (one character only)
+ */
+std::string convert_char (std::string& c,
+                   std::map<std::string, std::string>& conversion_map,
+                   std::map<std::string, std::string>& preconversion_map) {
+
+    // Preconversion
+    std::string cp = preconversion_map[c];
+
+    // Replace c with preconverted version if not empty
+    if (!( cp.empty() )) {
+        c = cp; // Replace c with preconverted c
+    };
+
+    // Conversion
+    std::string cc = conversion_map[c];
+
+    return cc;
+};
 
 
-void convert_char(char& c) {
 
-    std::cout << "Converting character '" << c << "'" << std::endl;
+/**
+ * Convert string to morse code binary representation
+ *
+ * @param c String (character) to convert
+ * @param conversion_map Conversion map from strings to morse code binary representation in string form
+ * @return Morse code binary representation of string input (one character only)
+ */
+std::string convert_char (std::string& c,
+                          std::map<std::string, std::string>& conversion_map) {
+    // Generate an empty map
+    std::map<std::string, std::string> empty_map;
+    
+    // Run the conversion function
+    std::string cc = convert_char(c, conversion_map, empty_map);
 
-    // Look if found in standard map
+    return cc;
+};
 
 
 
-
-}
 
 
 
@@ -110,17 +145,18 @@ void convert_from_text(std::string message) {
 
 int main () {
 
-    // Initialise the conversion map (to avoid using new/delete)
-    std::map<char, std::string> conversion_map;
+    // Generate the default preconversion map
+    std::map<std::string, std::string> preconversion_map;
+    fill_conversion_map (preconversion_map, "resources/preconversion.txt");
 
-    // Fill the conversion map
-    fill_map (conversion_map);
-
-
-
-
-    //char x = 'A';
-    //convert_char(x);
+    // Generate the conversion map
+    std::map<std::string, std::string> conversion_map;
+    fill_conversion_map (conversion_map, "resources/conversion.txt");
+    
+    // Test
+    std::string x = "à";
+    std::string xc = convert_char(x, conversion_map, preconversion_map);
+    std::cout << xc << std::endl;
     
 
     return 0;
