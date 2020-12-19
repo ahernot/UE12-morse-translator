@@ -4,7 +4,7 @@ Project due 2021.01.24
 <br><br>
 
 ## Changelog
-* v0.1: Begin project
+* v0.1 (2020.12.19): Begin project
 
 <br><br>
 
