@@ -2,9 +2,9 @@
 
 ## Description du projet
 
-Le projet a pour but de mettre en pratique les connaissances acquisent lors des séances d’apprentissage de la programmation. Le sujet de cette année est de développer en C++ un programme d’encodage/décodage de message en code MORSE.
+Le projet a pour but de mettre en pratique les connaissances acquises lors des séances d’apprentissage de la programmation. Le sujet de cette année est de développer en C++ un programme d’encodage/décodage de message en code Morse.
 Pour un peu de culture, le code Morse a été inventé en 1832 pour la télégraphie. Le principe est d’associer à chaque lettre et chiffre une combinaison unique de signaux intermittents.
-Le but du projet est donc de développer un programme permettant : (i) de convertir un message depuis le francais vers le Morse ; (ii) convertir un message Morse vers le francais. Cependant ce n’est pas tout . . . (trop facile sinon). Il faut que le message Morse soit stocké au format Audio afin que l’on puisse écouter votre message en utilisant VLC par exemple !
+Le but du projet est donc de développer un programme permettant : (i) de convertir un message depuis le francais vers le Morse ; (ii) convertir un message Morse vers le francais. Cependant ce n’est pas tout… (trop facile sinon). Il faut que le message Morse soit stocké au format Audio afin que l’on puisse écouter votre message, en utilisant VLC par exemple !
 
 <br><br>
 
@@ -14,7 +14,7 @@ Le but du projet est donc de développer un programme permettant : (i) de conver
 
 #### Francais vers Morse
 
-1. un utilisateur lance le programme
+1. Un utilisateur lance le programme
 2. Il spécifie au programme qu’il veut encoder un message
 3. Il donne le message (soit via un fichier texte lu par le programme, soit en le saisissant au clavier directement)
 4. Le programme génère un fichier audio contenant le message en Morse
