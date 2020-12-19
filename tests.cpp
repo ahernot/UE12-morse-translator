@@ -33,7 +33,7 @@ void fill_conversion_map (std::map<std::string, std::string>& conversion_map, co
 
     // Get the first line
     file_in >> letter >> sequence;
-    std::cout << letter << " = " << sequence << std::endl;
+    //std::cout << letter << " = " << sequence << std::endl;
 
     // Write to the map
     conversion_map[letter] = sequence;
@@ -43,7 +43,7 @@ void fill_conversion_map (std::map<std::string, std::string>& conversion_map, co
         
         // Read the line
         file_in >> letter >> sequence;
-        std::cout << letter << " = " << sequence << std::endl;
+        //std::cout << letter << " = " << sequence << std::endl;
 
         // Write to the map
         conversion_map[letter] = sequence;
@@ -106,23 +106,44 @@ std::string convert_char (std::string& c,
 
 
 
+std::queue<std::string> convert_from_text (std::string& message,
+                                           std::map<std::string, std::string>& conversion_map,
+                                           std::map<std::string, std::string>& preconversion_map) {
 
-
-void convert_from_text(std::string message) {
+    // Initialise queue
+    std::queue<std::string> conversion_queue;
 
     // Loop through the characters in the message string
     for (std::string::iterator it = message.begin(); it != message.end(); it++) {
-        // Convert individual character
+
+        // Convert from char to string
+        std::string c; std::string cc;
+        c = *it;
+
+        // Convert characters
+        if (c == " ") { cc = "_"; }
+        else if (c == ".") { cc = "."; }
+        else { std::string cc = convert_char(c, conversion_map, preconversion_map); };
+
+        // Push to queue
+        conversion_queue.push(cc);
         
-    }
+    };
+
+    return conversion_queue;
 
 };
 
 
 
+// Function to convert queue to binary signal with 0 and 1, each character lasting for TIME_UNIT milliseconds
+// Function to save output to a WAV file
+
+
+
 int main () {
 
-    // Generate the default preconversion map
+    // Generate the default preconversion map (accents are treated as several characters so don't really matter..)
     std::map<std::string, std::string> preconversion_map;
     fill_conversion_map (preconversion_map, "resources/preconversion.txt");
 
@@ -131,9 +152,15 @@ int main () {
     fill_conversion_map (conversion_map, "resources/conversion.txt");
     
     // Test
+    /*
     std::string x = "à";
     std::string xc = convert_char(x, conversion_map, preconversion_map);
     std::cout << xc << std::endl;
+    */
+
+
+    std::string message = "This is a message. Hello.";
+    std::queue<std::string> conversion_queue = convert_from_text(message, conversion_map, preconversion_map);
     
 
     return 0;
