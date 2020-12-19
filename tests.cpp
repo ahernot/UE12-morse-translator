@@ -5,6 +5,7 @@ g++ -std=c++11 tests.cpp -o t
 
 #include <iostream>
 #include <fstream> // file rw
+#include <sstream>
 
 #include <array>
 #include <map>
@@ -34,25 +35,36 @@ void generate_map () {
 */
 
 
-void generate_map () {
+void fill_map (std::map<char, std::string>& conversion_map) {
 
+    // Open the conversion file
     std::ifstream file_in;
-
     file_in.open("resources/conversion.txt");
 
-    //std::string line;
+    // Initialise the loop variables
+    std::string line;
+    char letter; std::string sequence;
 
-    for( std::string line; getline( file_in, line ); ) {
-        //std::cout << line << std::endl;
+    // Get the first line
+    file_in >> letter >> sequence;
+    std::cout << letter << " = " << sequence << std::endl;
 
-        char letter; char sequence;
+    // Write to the map
+    conversion_map[letter] = sequence;
+    
+    // Loop through the file's lines
+    while (std::getline(file_in, line)) {
+        
+        // Read the line
         file_in >> letter >> sequence;
         std::cout << letter << " = " << sequence << std::endl;
-        
+
+        // Write to the map
+        conversion_map[letter] = sequence;
+
     };
 
-    std::cout << file_in.eof() << std::endl; // end of file (bool)
-
+    // Close the conversion file
     file_in.close();
 
 
@@ -98,10 +110,18 @@ void convert_from_text(std::string message) {
 
 int main () {
 
-    generate_map();
+    // Initialise the conversion map (to avoid using new/delete)
+    std::map<char, std::string> conversion_map;
+
+    // Fill the conversion map
+    fill_map (conversion_map);
+
+
+
 
     //char x = 'A';
     //convert_char(x);
+    
 
     return 0;
 };
