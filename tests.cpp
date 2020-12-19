@@ -14,29 +14,6 @@ g++ -std=c++11 tests.cpp -o t
 #include <queue> // queue to add letters
 
 
-/*
-ARCHIVE MAP TO LOAD LATER (in v2)
-void generate_map () {
-
-    std::ofstream ofs("output_file");
-
-    // create class instance
-    std::map<int,std::string> mymap;
-
-    // populate map.
-    mymap[0] = "the"; mymap[1] = "they";
-
-    // save data to archive
-    {
-        boost::archive::text_oarchive oa(ofs);
-        // write map instance to archive
-        oa << mymap;
-        // archive and stream closed when destructors are called
-    };
-};
-*/
-
-
 
 /**
  * Fill a string->string conversion map with data from a TXT file
