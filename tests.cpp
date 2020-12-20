@@ -157,11 +157,14 @@ std::queue<std::string> convert_from_text (std::string& message,
 
 
 
-// Function to convert queue to binary signal with 0 and 1, each character lasting for TIME_UNIT milliseconds
-// Function to save output to a WAV file
 
 
-
+/**
+ * Convert from morse sequence queue to signal bytestream queue
+ *
+ * @param conversion_queue Morse sequence queue
+ * @return Signal bytestream queue
+ */
 std::queue<bool> queueToSignal (std::queue<std::string> conversion_queue) {
 
     // Initialise signal queue
@@ -291,25 +294,30 @@ int main () {
     // Generate the conversion map
     std::map<std::string, std::string> conversion_map;
     fill_conversion_map (conversion_map, "resources/conversion.txt");
-    
-    // Test
-    /*
-    std::string x = "à";
-    std::string xc = convert_char(x, conversion_map, preconversion_map);
-    std::cout << xc << std::endl;
-    */
 
 
+
+    // Define message
     std::string message = "This is a message. Hello.";
+
+    // Convert from text to morse sequence
     std::queue<std::string> conversion_queue = convert_from_text(message, conversion_map, preconversion_map);
     
-
+    // Convert from morse sequence to signal bytestream queue
     std::queue<bool> signal_queue = queueToSignal(conversion_queue);
+
+
+
+    // Print signal
     while (!signal_queue.empty()) {
         bool cbool = signal_queue.front();
         //std::cout << cbool << std::endl;
         signal_queue.pop();
     };
+
+
+    
+    // Save output to a WAV file
 
     return 0;
 };
