@@ -12,5 +12,5 @@ Project due 2021.01.24
 ## To do
 * v0.3: Implement text->WAV conversion
 * v0.4: Implement WAV reading and backwards conversion
-* v2: Use json files or equivalent for conversion maps storage (or archive using boost::archive::text_oarchive)
+* v2: Use json files or equivalent for conversion maps storage (or archive using `boost::archive::text_oarchive`)
 * v2: Deal with accentuated characters better
