@@ -39,7 +39,7 @@ Un programme lisible et bien construit
 * Des tests
 
 
-Le programme ainsi que tous les éléments additionels (doc, test, . . . ) devra être versionné sous Git et mis à disposition sur Github. <b>Vous devez envoyer à V. Roy, P. Thamie ou B. Marchand (selon votre groupe) pour le 24 Janvier 2021 avant 23h59 le lien vers votre dépôt Git.</b>
+Le programme ainsi que tous les éléments additionels (doc, test, …) devra être versionné sous Git et mis à disposition sur Github. <b>Vous devez envoyer à V. Roy, P. Thamie ou B. Marchand (selon votre groupe) pour le 24 Janvier 2021 avant 23h59 le lien vers votre dépôt Git.</b>
 
 <br>
 
