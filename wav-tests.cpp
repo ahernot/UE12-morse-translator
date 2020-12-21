@@ -38,6 +38,7 @@ int main () {
 
     /*IMPORTANT
     int num = 0x12037F; // will write 7F 03 12
+    file_wav.write(reinterpret_cast<const char*>(&num), sizeof(num));*/
     //std::cout << 0x37F << std::endl; std::cout << 0b010 << std::endl;
 
     // WAV file attributes
