@@ -19,6 +19,7 @@ Project due 2021.01.24
 <br><br>
 
 ## About the PCM data format
+from https://stackoverflow.com/questions/49764773/how-is-audio-data-stored-in-raw-pcm-format
 It is a RAW data storage format, and is the simplest data storage format — data is stored linearly and uncompressed.
 
 <br>
