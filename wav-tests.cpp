@@ -4,20 +4,39 @@ g++ -std=c++11 wav-tests.cpp -o wt
 */
 
 // http://www.topherlee.com/software/pcm-tut-wavformat.html
-// https://gist.github.com/csukuangfj/c1d1d769606260d436f8674c30662450
+// https://gist.github.com/csukuangfj/c1d1d769606260d436f8674c30662450 -> HOW TO WRITE ON POSITION, HANDLE POINTER...
+// https://gist.github.com/grogy/5137278
+// https://medium.com/@zekumorudoragonhatto/how-to-work-with-binary-files-in-c-520a852ee04a meh
 
 #include <iostream>
 #include <fstream> // file rw
 
 
 
+
+
+
+
 class WAVContainer {
     private:
 
+        void init_header () {
+
+
+        };
+
+
     public:
-        void write () {};
+
+        void write () {}; // from a std::vector
         void save () {};
+
 };
+
+
+
+
+
 
 
 
@@ -44,7 +63,7 @@ int main () {
     // WAV file attributes
     int bitSize = 16; // 0x00000010
     int channels = 1; // 0x0001
-    int samplingRate = 44100; // 0xAC44
+    int sampleRate = 44100; // 0xAC44
     int bitsPerSample = 16;
 
     // Filename
@@ -57,6 +76,8 @@ int main () {
     file_wav.open(wav_filename, std::ios::binary);
     
 
+
+    /*
     // -- BEGIN WAV HEADER -- //
 
     // [0-3] "RIFF" header
@@ -82,18 +103,18 @@ int main () {
     // [22-23] Number of channels
     file_wav.write(reinterpret_cast<const char*>(&channels), 2);
 
-    // [24-27] Sampling rate
-    file_wav.write(reinterpret_cast<const char*>(&samplingRate), sizeof(samplingRate));
+    // [24-27] Sample rate
+    file_wav.write(reinterpret_cast<const char*>(&sampleRate), sizeof(sampleRate));
 
     // [28-31] Sample Rate * BitsPerSample * Channels / 8
-    int val1 = samplingRate * bitsPerSample * channels / 8;
+    int val1 = sampleRate * bitsPerSample * channels / 8;
     file_wav.write(reinterpret_cast<const char*>(&val1), 4);
 
     // [32-33] BitsPerSample * Channels / 8
     int val2 = bitsPerSample * channels / 8;
     file_wav.write(reinterpret_cast<const char*>(&val2), 2);
 
-    // [34-35] Bits per sample
+    // [34-35] Bits per sample (bitSize * channels)
     file_wav.write(reinterpret_cast<const char*>(&bitsPerSample), 2);
 
     // [36-39] "data" chunk header. Marks the beginning of the data section.
@@ -104,6 +125,30 @@ int main () {
     file_wav.write(reinterpret_cast<const char*>(&dataSize), sizeof(dataSize));
 
     // -- END WAV HEADER -- //
+    */
+
+
+
+    /* CLEANER APPROACH, FOR LATER
+    // RIFF Chunk Descriptor
+    uint8_t riffHeader[4] = {'R', 'I', 'F', 'F'}; // RIFF Header Magic header
+    uint32_t riffChunkSize; // RIFF Chunk Size
+    uint8_t waveHeader[4] = {'W', 'A', 'V', 'E'}; // WAVE Header
+
+    // "fmt" sub-chunk
+    uint8_t fmtHeader[4] = {'f', 'm', 't', ' '}; // FMT header
+    uint32_t fmtChunkSize = 16; // Size of the fmt chunk
+    uint16_t audioFormat = 1; // Audio format 1=PCM, 6=mulaw, 7=alaw, 257=IBM Mu-Law, 258=IBM A-Law, 259=ADPCM
+    uint16_t channels = 1; // Number of channels 1=Mono 2=Sterio
+    uint32_t samplesPerSec = 16000; // Sampling Frequency in Hz
+    uint32_t bytesPerSec = 16000 * 2; // bytes per second
+    uint16_t blockAlign = 2; // 2=16-bit mono, 4=16-bit stereo
+    uint16_t bitsPerSample = 16; // Number of bits per sample
+
+    // "data" sub-chunk
+    uint8_t dataHeader[4] = {'d', 'a', 't', 'a'}; // "data"  string
+    uint32_t dataChunkSize; // Sampled data length
+    */
     
 
     // Close file
