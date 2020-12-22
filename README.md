@@ -14,3 +14,43 @@ Project due 2021.01.24
 * v0.4: Implement WAV reading and backwards conversion
 * v2: Use json files or equivalent for conversion maps storage (or archive using `boost::archive::text_oarchive`)
 * v2: Deal with accentuated characters better
+
+
+<br><br>
+
+## About the PCM data format
+It is a RAW data storage format, and is the simplest data storage format — data is stored linearly and uncompressed.
+
+<br>
+
+Example for a stereo (L, R) 16-bit (2 bytes per sample) little-endian (smallest byte on the left) signal:
+```
+…  |    i-1    |     i     |    i+1    |  …  <- point id
+…  |  L  |  R  |  L  |  R  |  L  |  R  |  …  <- data segments
+…  |Ll|Lb|Rl|Rb|Ll|Lb|Rl|Rb|Ll|Lb|Rl|Rb|  …  <- in byte chunks (8 bits)
+```
+
+<br>
+
+Example for a 3-channel (L, R, C) 32-bit (4 bytes per sample) little-endian (smallest byte on the left) signal:
+```
+…  |                i-1                |                 i                 |                i+1                |  …  <- point id
+…  |     L     |     R     |     C     |     L     |     R     |     C     |     L     |     R     |     C     |  …  <- data segments
+…  |L0|L1|L2|L3|R0|R1|R2|R3|C0|C1|C2|C3|L0|L1|L2|L3|R0|R1|R2|R3|C0|C1|C2|C3|L0|L1|L2|L3|R0|R1|R2|R3|C0|C1|C2|C3|  …  <- in byte chunks (8 bits)
+```
+
+
+
+## Endianness
+
+Data is stored in bytes (1 byte = 8 bits).
+For 16-bit signals, each data point is spread across two bytes. Endianness refers to the order of the data.
+
+For little-endian storage, the least significant (smallest) byte is on the left:
+```
+    0        1        2     <- byte id
+01234567 01234567 01234567  <- byte position
+•••••••• •••••••• ••••••••  <- data
+```
+
+and the number, once assembled, should read 2 $\|$ 1 $\|$ 0 (24-bit signal)
