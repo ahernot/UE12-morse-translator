@@ -1,9 +1,23 @@
+#include <iostream>
 #include <vector>
 
-void generateFreqSquare (std::vector<uint8_t>& signalPCM,
-                         const int& startPos,
-                         const int& stopPos,
-                         const int& frequency,
-                         const int& sampleRate, // must be > 2 * frequency (Nyquist-Shannon)
-                         const int& amplitude, // 255 for 8-bit signal
-                         const int& channelNb);
+#include "config.h"
+
+
+void fillNoise (std::vector<uint8_t>& signalPCM,
+                const int& startPos,
+                const int& stopPos,
+                const int& channelNb);
+
+void fillFreqSquare (std::vector<uint8_t>& signalPCM,
+                     const int& startPos,
+                     const int& stopPos,
+                     const int& frequency,
+                     const int& sampleRate,
+                     const int& amplitude,
+                     const int& channelNb);
+
+void fillFromQueue (std::vector<uint8_t>& signalPCM,
+                    std::queue<bool>& signalQueue,
+                    const int& frequency = FREQUENCY,
+                    const int& sampleRate = SAMPLE_RATE);

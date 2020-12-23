@@ -25,9 +25,9 @@ g++ -std=c++11 pcm.cpp -o pcm
 
 // 8-bit signal -- otherwise too annoying to deal with endianness
 void fillNoise (std::vector<uint8_t>& signalPCM,
-                    const int& startPos,
-                    const int& stopPos,
-                    const int& channelNb) {
+                const int& startPos,
+                const int& stopPos,
+                const int& channelNb) {
 
     // Add values
     for (int sampleId = startPos; sampleId < stopPos; sampleId++) {
@@ -44,12 +44,12 @@ void fillNoise (std::vector<uint8_t>& signalPCM,
 
 // 8-bit signal -- otherwise too annoying to deal with endianness
 void fillFreqSquare (std::vector<uint8_t>& signalPCM,
-                         const int& startPos,
-                         const int& stopPos,
-                         const int& frequency,
-                         const int& sampleRate, // must be > 2 * frequency (Nyquist-Shannon)
-                         const int& amplitude, // 255 for 8-bit signal
-                         const int& channelNb) {
+                     const int& startPos,
+                     const int& stopPos,
+                     const int& frequency,
+                     const int& sampleRate, // must be > 2 * frequency (Nyquist-Shannon)
+                     const int& amplitude, // 255 for 8-bit signal
+                     const int& channelNb) {
 
 
     // square signal: one 1 every n 0
@@ -79,13 +79,13 @@ void fillFreqSquare (std::vector<uint8_t>& signalPCM,
 // one channel, amplitude is 255
 // requirement (Nyquist-Shannon): frequency * 2 < sampleRate
 void fillFromQueue (std::vector<uint8_t>& signalPCM, // of the right size
-                    std::queue<bool> signalQueue, // pas de passage en référence (so that not emptied??)
+                    std::queue<bool>& signalQueue, // passage par référence: the queue is emptied
                     const int& frequency, // 440Hz
                     const int& sampleRate) {
 
     // Define constants
     const int amplitude = 255; // 8-bit signal
-    const int channelNb = 1;
+    const int channelNb = CHANNEL_NB; // 1
 
     // Calculate number of samples per unit
     const int samplesPerUnit = sampleRate * TIME_UNIT / 1000;
