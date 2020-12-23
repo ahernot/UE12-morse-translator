@@ -4,7 +4,18 @@
 
 #include "config.h"
 #include "pcm.h"
+#include "wav.h"
 
+
+
+
+
+
+void textToMorseAudio (const std::string text,
+                       const std::string outFilePath) {
+
+
+    };
 
 
 
