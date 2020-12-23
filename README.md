@@ -11,7 +11,7 @@ Project due 2021.01.24
 <br><br>
 
 ## Changelog
-* v0.1 (2020.12.19): Begin project, create Roman->Morse conversion functions
+* v0.1 (2020.12.19): Begin project, create text->Morse conversion functions
 * v0.2 (2020.12.20): Create Morse->signal conversion function with smart support for spaces
 * v0.3 (2020.12.23): Create signal->WAV conversion function, reorganise into package structure
 
