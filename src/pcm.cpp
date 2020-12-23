@@ -91,6 +91,8 @@ void fillFromQueue (std::vector<uint8_t>& signalPCM, // of the right size
     const int samplesPerUnit = sampleRate * TIME_UNIT / 1000;
     // int signalSize = sizeof(signalQueue) * samplesPerUnit;
 
+    std::cout << "   " << samplesPerUnit << " samples per unit" << std::endl;
+
     // Initialise sampleId
     int sampleId = 0;
 
@@ -99,6 +101,8 @@ void fillFromQueue (std::vector<uint8_t>& signalPCM, // of the right size
 
         // Get first item of signal queue
         bool signalBool = signalQueue.front();
+
+        std::cout << "   Processing bool " << signalBool << std::endl;
 
         // Generate tone
         if (signalBool == true) {
