@@ -27,7 +27,7 @@ Project due 2021.01.24
 
 
 ## About the program
-This program implements a basic, uncompressed audio generation. As such, the output audio file is an 8-bit mono audio file. Given the binary nature of Morse code, a simple 2-bit file with a fixed sample rate would've been sufficient, but this program's goal is to make the Morse code generated human-understandable. As such, the tone is audible (440Hz) and lasts for significantly longer than needed (here, 250ms).
+This program implements a basic, uncompressed audio generation. As such, the output audio file is an 8-bit mono audio file. Given the binary nature of Morse code, a simple 2-bit file with a fixed sample rate would've been sufficient, but this program's goal is to make the Morse code generated human-understandable. As such, the tone is audible (440Hz) and lasts for significantly longer than needed (here, 150ms).
 
 The following sources and documentation were of great help to me:
 * A webpage documenting how a WAV header is constructed http://www.topherlee.com/software/pcm-tut-wavformat.html and a clean (cleaner than mine) C++ implementation https://gist.github.com/csukuangfj/c1d1d769606260d436f8674c30662450 
