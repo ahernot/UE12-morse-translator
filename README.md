@@ -18,9 +18,11 @@ Project due 2021.01.24
 <br><br>
 
 ## To do
-* v0.4: Implement WAV reading and backwards conversion (WAV->text)
+* v0.4: Implement .wav file reading (WAV->PCMvector)
+* v0.5: Implement backwards conversion (PCMvector->text)
 * v2: Use json files or equivalent for conversion maps storage (or archive using `boost::archive::text_oarchive`)
 * v2: Deal with accentuated characters better
+* add `-std=$(CPP)` in makefile?
 
 
 <br><br>
