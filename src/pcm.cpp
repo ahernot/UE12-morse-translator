@@ -11,82 +11,11 @@ g++ -std=c++11 pcm.cpp -o pcm
 #include <vector>
 #include <queue>
 
-#define TIME_UNIT 10 // TEMP
+#include "config.h"
+//#define TIME_UNIT 10 // TEMP
 
 
-// chunk of frequency when true, chunk of nothing when false
-std::vector<int> signalFromQueue (std::queue<bool> signalQueue, // pas de passage en référence
-                                    const int& frequency,
-                                    const int& amplitude,
-                                    const int& sampleRate,
-                                    const int& channels) {
-    /*
-    sampleRate=44100Hz
-    channels=1
-    8-bit signal -- otherwise too annoying to deal with little endian etc
-    */
 
-
-    int high = 255; // max amplitude for 8-bit signal
-    int low = 0;
-    // int frequency = 440; // Hz (A440)
-    // requirement (Nyquist-Shannon): frequency * 2 < sampleRate
-
-    // Calculate size of output signal
-    int samplesPerUnit = sampleRate * TIME_UNIT / 1000;
-    int signalSize = sizeof(signalQueue) * samplesPerUnit;
-
-    // Calculate number of null points between two impulses
-    int pointDelta = sampleRate / frequency; // converts to int automatically (close enough if frequency << sampleRate)
-
-    std::cout << "   sizeof signalQueue: " << sizeof(signalQueue) << std::endl;
-    std::cout << "   sample rate: " << sampleRate << "Hz" << std::endl;
-    std::cout << "   time unit: " << TIME_UNIT << "ms" << std::endl;
-    std::cout << "   samplesPerUnit: " << samplesPerUnit << std::endl;
-    std::cout << "   signalSize: " << signalSize << std::endl;
-    std::cout << "   point delta: " << pointDelta << std::endl;
-
-    
-    // Initialise signal vector
-    std::vector<int> signalPCM (signalSize);
-
-    // Iterate through queue
-    while (!signalQueue.empty()) {
-
-        // Get first item of signal queue
-        bool signalBool = signalQueue.front();
-
-        //std::cout << "Processing " << signalBool << std::endl;
-
-        // Generate tone
-        if (signalBool == true) {
-
-            //std::cout << "   signal" << std::endl;
-
-            for (int i=0; i<samplesPerUnit; i++) {
-
-                if (i % pointDelta == 0) {
-                    signalPCM.push_back(high);
-                }
-                else {
-                    signalPCM.push_back(low);
-                };
-            };
-        }
-        else {
-            //std::cout << "   zeros" << std::endl;
-            for (int i=0; i<samplesPerUnit; i++) {
-                signalPCM.push_back(low);
-            };
-        };
-
-
-        // Remove first item from signal queue
-        signalQueue.pop();
-    };
-
-    return signalPCM;
-};
 
 
 
@@ -95,7 +24,7 @@ std::vector<int> signalFromQueue (std::queue<bool> signalQueue, // pas de passag
 
 
 // 8-bit signal -- otherwise too annoying to deal with endianness
-void generateNoise (std::vector<uint8_t>& signalPCM,
+void fillNoise (std::vector<uint8_t>& signalPCM,
                     const int& startPos,
                     const int& stopPos,
                     const int& channelNb) {
@@ -114,7 +43,7 @@ void generateNoise (std::vector<uint8_t>& signalPCM,
 
 
 // 8-bit signal -- otherwise too annoying to deal with endianness
-void generateFreqSquare (std::vector<uint8_t>& signalPCM,
+void fillFreqSquare (std::vector<uint8_t>& signalPCM,
                          const int& startPos,
                          const int& stopPos,
                          const int& frequency,
@@ -141,6 +70,61 @@ void generateFreqSquare (std::vector<uint8_t>& signalPCM,
         for (int ch = 0; ch < channelNb; ch++) {
             signalPCM[sampleId] = data;
         };
+    };
+};
+
+
+
+// chunk of frequency when true, chunk of nothing when false
+// one channel, amplitude is 255
+// requirement (Nyquist-Shannon): frequency * 2 < sampleRate
+void fillFromQueue (std::vector<uint8_t>& signalPCM, // of the right size
+                    std::queue<bool> signalQueue, // pas de passage en référence
+                    const int& frequency, // 440Hz
+                    const int& sampleRate) {
+
+    // Define constants
+    const int amplitude = 255; // 8-bit signal
+    const int channelNb = 1;
+
+    // Calculate number of samples per unit
+    const int samplesPerUnit = sampleRate * TIME_UNIT / 1000;
+    // int signalSize = sizeof(signalQueue) * samplesPerUnit;
+
+    // Initialise sampleId
+    int sampleId = 0;
+
+    // Iterate through queue
+    while (!signalQueue.empty()) {
+
+        // Get first item of signal queue
+        bool signalBool = signalQueue.front();
+
+        // Generate tone
+        if (signalBool == true) {
+            
+            // Fill unit with frequency
+            fillFreqSquare(signalPCM, sampleId, sampleId + samplesPerUnit, frequency, sampleRate, amplitude, channelNb);
+
+            // Increment sampleId
+            sampleId += samplesPerUnit;
+        }
+        else {
+            
+            // Fill unit with 0
+            for (int i=0; i<samplesPerUnit; i++) {
+                signalPCM[sampleId + i] = 0;
+            };
+
+            // Increment sampleId
+            sampleId += samplesPerUnit;
+        };
+
+
+        // Remove first item from signal queue
+        signalQueue.pop();
+
+        
     };
 };
 
@@ -184,7 +168,7 @@ int main() {
     int vectorSize = sampleNb * channelNb;
     std::vector<uint8_t> signalPCM (vectorSize); // Initialise signal vector
     //generateNoise(signalPCM, 0, sampleNb, channelNb); // Fill signal vector with random noise
-    generateFreqSquare(signalPCM, 0, sampleNb, 440, 44100, 255, 1);
+    fillFreqSquare(signalPCM, 0, sampleNb, 440, 44100, 255, 1);
 
 
 
