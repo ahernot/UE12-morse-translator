@@ -6,7 +6,7 @@ Project due 2021.01.24
 ## Compilation Instructions
 * `cd` to the project folder
 * run the `make` command in the shell
-* to run, type ./morse in the shell
+* to run, type `./morse` in the shell
 
 <br><br>
 
