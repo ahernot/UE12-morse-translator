@@ -5,8 +5,6 @@
 #include <queue>
 #include <vector>
 
-// #include "stdlib.h"
-
 #include "config.h"
 
 #include "data_loader.h"
@@ -15,8 +13,6 @@
 #include "pcm.h"
 #include "wav.h"
 
-
-// add -std=$(CPP) in makefile?
 
 
 
