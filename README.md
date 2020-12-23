@@ -65,7 +65,7 @@ Example for a 3-channel (L, R, C) 32-bit (4 bytes per sample) little-endian (sma
 <br><br>
 
 
-## A word on endianness
+## A few words on endianness
 
 Data is stored in bytes (1 byte = 8 bits).
 For 16-bit signals, each data point is spread across two bytes. Endianness refers to the order of the data.
