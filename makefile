@@ -13,7 +13,6 @@ all: directories libmorse.a morse # target par défaut
 	@echo $(obj)
 
 morse: main.cpp libmorse.a
-	#$(CXX) $(CXXFLAGS) -std=$(CPP) $^ -o $@
 	$(CXX) $(CXXFLAGS) $^ -o $@
 
 libmorse.a: ${obj}
@@ -22,7 +21,6 @@ libmorse.a: ${obj}
 
 # règle pour traiter les build/{}.o : do nothing if target more recent than dépendances; else re-compile
 build/%.o: src/%.cpp include/%.h include/config.h
-	#$(CXX) $(CXXFLAGS) -std=$(CPP) -o $@ -c $<
 	$(CXX) $(CXXFLAGS) -o $@ -c $<
 
 
