@@ -11,10 +11,12 @@
 
 #include "data_loader.h"
 #include "morse.h"
-#include "signal.h"
+#include "signal_gen.h"
 #include "pcm.h"
 #include "wav.h"
 
+
+// add -std=$(CPP) in makefile?
 
 
 
@@ -26,15 +28,21 @@ void textToMorseAudio (std::string& text, // cannot be const because of iterator
     // Convert from text to morse sequence
     std::queue<std::string> conversionQueue;
     stringToMorse(text, conversionQueue, conversionMap, preconversionMap);
+
     
-    // Convert from morse sequence to signal bytestream queue
-    // deletes conversionQueue (will result empty)
+    // Convert from morse sequence to signal bytestream queue (empties conversionQueue)
     std::queue<bool> signalQueue;
+    //signalQueue.push(true); signalQueue.push(false); signalQueue.push(true); signalQueue.push(false); signalQueue.push(true); signalQueue.push(false); signalQueue.push(true); signalQueue.push(false); signalQueue.push(true); signalQueue.push(false);
     queueToSignal(conversionQueue, signalQueue);
 
+
     // Generate PCM signal to include into WAV file
-    std::vector<uint8_t> signalPCM;
+    const int samplesPerUnit = SAMPLE_RATE * TIME_UNIT / 1000;
+    const int unitNb = signalQueue.size();
+    const int signalSize = samplesPerUnit * unitNb * CHANNEL_NB;
+    std::vector<uint8_t> signalPCM (signalSize);
     fillFromQueue (signalPCM, signalQueue, FREQUENCY, SAMPLE_RATE);
+
     
     // Generate WAV file
     generateWAV (signalPCM, outFilePath);
@@ -45,7 +53,7 @@ void textToMorseAudio (std::string& text, // cannot be const because of iterator
 
 
 int main () {
-    
+
     // Generate the default preconversion map (accents are treated as several characters so don't really matter..)
     std::map<std::string, std::string> preconversionMap;
     fillConversionMap (preconversionMap, "resources/preconversion.txt");
@@ -57,9 +65,12 @@ int main () {
 
 
 
+
     // Convert text to morse audio file
     std::string message = "This is a message. Hello.";
     const std::string outFilePath = "output/output.wav";
+
+    std::cout << "Converting from text to audio" << std::endl;
     textToMorseAudio(message, outFilePath, conversionMap, preconversionMap);
 
     
