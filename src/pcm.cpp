@@ -79,7 +79,7 @@ void fillFreqSquare (std::vector<uint8_t>& signalPCM,
 // one channel, amplitude is 255
 // requirement (Nyquist-Shannon): frequency * 2 < sampleRate
 void fillFromQueue (std::vector<uint8_t>& signalPCM, // of the right size
-                    std::queue<bool> signalQueue, // pas de passage en référence
+                    std::queue<bool> signalQueue, // pas de passage en référence (so that not emptied??)
                     const int& frequency, // 440Hz
                     const int& sampleRate) {
 
