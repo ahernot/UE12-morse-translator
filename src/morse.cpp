@@ -1,10 +1,6 @@
-
-
 #include <string>
 #include <map>
 #include <queue>
-
-
 
 
 /**
@@ -32,8 +28,6 @@ std::string charToMorse (std::string& c,
 
     return cc; // Return by value
 };
-
-
 
 
 
@@ -66,9 +60,3 @@ void stringToMorse (std::string& message,
         
     };
 };
-
-
-
-
-
-// move the queueToSignal function elsewhere
