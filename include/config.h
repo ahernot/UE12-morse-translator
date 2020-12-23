@@ -1,5 +1,5 @@
 
-#define TIME_UNIT 10 // 10ms
+#define TIME_UNIT 250 // 10ms
 
 #define DASH_TIME 3 // length of dash
 #define DOT_TIME 1 // length of dot
