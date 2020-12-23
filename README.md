@@ -78,7 +78,7 @@ For little-endian storage, the least significant (smallest) byte is on the left:
 and the number, once assembled, should read 2 $\|$ 1 $\|$ 0 (24-bit signal)
 
 
-
+<br><br>
 
 
 ## Random notes
