@@ -24,13 +24,13 @@ std::string charToMorse (std::string& c,
 
     // Replace c with preconverted version if not empty
     if (!( cp.empty() )) {
-        c = cp; // Replace c with preconverted c
+        c = cp;
     };
 
     // Conversion
     const std::string cc = conversionMap[c];
 
-    return cc;
+    return cc; // Return by value
 };
 
 
@@ -66,3 +66,9 @@ void stringToMorse (std::string& message,
         
     };
 };
+
+
+
+
+
+// move the queueToSignal function elsewhere
