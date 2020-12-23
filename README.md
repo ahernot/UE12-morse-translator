@@ -1,4 +1,4 @@
-# UE11 – Morse Translator (v0.2)
+# UE11 – Morse Translator (v0.3)
 Project due 2021.01.24
 
 <br><br>
@@ -6,17 +6,25 @@ Project due 2021.01.24
 ## Changelog
 * v0.1 (2020.12.19): Begin project, create Roman->Morse conversion functions
 * v0.2 (2020.12.20): Create Morse->signal conversion function with smart support for spaces
+# v0.3 (2020.12.23): Create signal->WAV conversion function, reorganise into package structure
 
 <br><br>
 
 ## To do
-* v0.3: Implement text->WAV conversion
-* v0.4: Implement WAV reading and backwards conversion
+* v0.4: Implement WAV reading and backwards conversion (WAV->text)
 * v2: Use json files or equivalent for conversion maps storage (or archive using `boost::archive::text_oarchive`)
 * v2: Deal with accentuated characters better
 
 
 <br><br>
+
+
+## About the program
+This program implements a basic, uncompressed audio generation. As such, the output audio file is an 8-bit mono audio file. Given the binary nature of Morse code, a simple 2-bit file with a fixed sample rate would've been sufficient, but this program's goal is to make the Morse code generated human-understandable. As such, the tone is audible (440Hz) and lasts for significantly longer than needed (here, 250ms).
+
+
+<br><br>
+
 
 ## About the PCM data format
 from https://stackoverflow.com/questions/49764773/how-is-audio-data-stored-in-raw-pcm-format
