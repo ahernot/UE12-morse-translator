@@ -65,3 +65,18 @@ For little-endian storage, the least significant (smallest) byte is on the left:
 ```
 
 and the number, once assembled, should read 2 $\|$ 1 $\|$ 0 (24-bit signal)
+
+
+
+
+
+
+
+
+// http://www.topherlee.com/software/pcm-tut-wavformat.html
+// https://gist.github.com/csukuangfj/c1d1d769606260d436f8674c30662450 -> HOW TO WRITE ON POSITION, HANDLE POINTER...
+// https://gist.github.com/grogy/5137278
+// https://medium.com/@zekumorudoragonhatto/how-to-work-with-binary-files-in-c-520a852ee04a meh
+
+// Get size of vector: vector.size()
+// sizeof() function must be looking at bit size of first element
