@@ -4,12 +4,12 @@ CXXFLAGS=-Wall -ggdb -Iinclude
 AR=/usr/bin/ar -r 
 
 src := $(wildcard src/*.cpp)
-obj := $(subst src, build, $(src:.cpp=.o)) # dans src, replace .cpp with .o
+obj := $(subst src, build, $(src:.cpp=.o))
 
 
 .PHONY: directories
 
-all: directories libmorse.a morse # target par défaut
+all: directories libmorse.a morse
 	@echo $(obj)
 
 morse: main.cpp libmorse.a
@@ -17,9 +17,7 @@ morse: main.cpp libmorse.a
 
 libmorse.a: ${obj}
 	${AR} $@ $^
-# $^ = toutes les dépendances passées en entrée
 
-# règle pour traiter les build/{}.o : do nothing if target more recent than dépendances; else re-compile
 build/%.o: src/%.cpp include/%.h include/config.h
 	$(CXX) $(CXXFLAGS) -o $@ -c $<
 
@@ -27,7 +25,6 @@ build/%.o: src/%.cpp include/%.h include/config.h
 directories: build
 build:
 	mkdir -p $@
-# mkdir -p build
 
 clean: 
 	rm morse
