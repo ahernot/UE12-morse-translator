@@ -72,8 +72,7 @@ void generateWAV (std::vector<uint8_t>& signalPCM, // cannot put const :(
 
 
 
-
-const std::string outFilePath = "output/output.wav";
+/*
 
 
 // main function just for tests
@@ -114,3 +113,4 @@ int main() {
 
     return 0;
 };
+*/
