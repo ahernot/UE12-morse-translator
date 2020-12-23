@@ -6,3 +6,4 @@ t
 .vscode
 .idea
 morse.dSYM/*
+build/*
