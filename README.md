@@ -29,8 +29,9 @@ Project due 2021.01.24
 ## About the program
 This program implements a basic, uncompressed audio generation. As such, the output audio file is an 8-bit mono audio file. Given the binary nature of Morse code, a simple 2-bit file with a fixed sample rate would've been sufficient, but this program's goal is to make the Morse code generated human-understandable. As such, the tone is audible (440Hz) and lasts for significantly longer than needed (here, 250ms).
 
-
-### Compilation Instructions
+The following sources and documentation were of great help to me:
+* A webpage documenting how a WAV header is constructed http://www.topherlee.com/software/pcm-tut-wavformat.html and a clean (cleaner than mine) C++ implementation https://gist.github.com/csukuangfj/c1d1d769606260d436f8674c30662450 
+* A Gist explaining how to write to a binary file in C++ https://gist.github.com/grogy/5137278
 
 
 <br><br>
@@ -80,13 +81,6 @@ and the number, once assembled, should read 2 $\|$ 1 $\|$ 0 (24-bit signal)
 
 
 
+## Random notes
 
-
-
-// http://www.topherlee.com/software/pcm-tut-wavformat.html
-// https://gist.github.com/csukuangfj/c1d1d769606260d436f8674c30662450 -> HOW TO WRITE ON POSITION, HANDLE POINTER...
-// https://gist.github.com/grogy/5137278
-// https://medium.com/@zekumorudoragonhatto/how-to-work-with-binary-files-in-c-520a852ee04a meh
-
-// Get size of vector: vector.size()
-// sizeof() function must be looking at bit size of first element
+The `.size` function gets the size of a C++ object (`vector.size()` will return the number of elements in `vector`). The `sizeof()` function returns the bit size of the element at the pointer address of the object (hence, for a vector or any other 'recurrent' data structure, it is much lesser than the actual bit size of the whole object).
