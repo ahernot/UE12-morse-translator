@@ -68,7 +68,7 @@ void queueToSignal (std::queue<std::string>& conversionQueue,
                 };
 
                 // Get impulse length
-                int impulseTime;
+                int impulseTime = 0;
                 if (c == dot_repr) {
                     impulseTime = DOT_TIME;
                     //std::cout << "dot" << std::endl;
@@ -97,7 +97,7 @@ void queueToSignal (std::queue<std::string>& conversionQueue,
                 queueGap = false;
 
                 // Get gap length
-                int gapTime;
+                int gapTime = 0;
                 if (c == space) {
                     gapTime = WORD_BREAK_TIME;
                     //std::cout << ">>>SPACE" << std::endl;
