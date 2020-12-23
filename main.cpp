@@ -36,8 +36,11 @@ void textToMorseAudio (std::string& text, // cannot be const because of iterator
     std::vector<uint8_t> signalPCM;
     fillFromQueue (signalPCM, signalQueue, FREQUENCY, SAMPLE_RATE);
     
+    // Generate WAV file
+    generateWAV (signalPCM, outFilePath);
 
-    };
+};
+
 
 
 
@@ -50,6 +53,9 @@ int main () {
     // Generate the conversion map
     std::map<std::string, std::string> conversionMap;
     fillConversionMap (conversionMap, "resources/conversion.txt");
+
+
+
 
     // Convert text to morse audio file
     std::string message = "This is a message. Hello.";
