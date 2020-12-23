@@ -63,7 +63,7 @@ int main () {
 
 
     // Convert text to Morse audio file
-    std::string message = "This is a message. Hello.";
+    std::string message = "Hello World";
     const std::string outFilePath = "output/output.wav";
     textToMorseAudio(message, outFilePath, conversionMap, preconversionMap);
 
