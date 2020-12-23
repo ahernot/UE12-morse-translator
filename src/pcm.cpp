@@ -1,5 +1,6 @@
 /*
-This file handles encoding to and decoding from the PCM format
+This file handles encoding to and decoding from the PCM format.
+
 g++ -std=c++11 pcm.cpp -o pcm
 ./pcm
 */
@@ -12,7 +13,6 @@ g++ -std=c++11 pcm.cpp -o pcm
 #include <queue>
 
 #include "config.h"
-//#define TIME_UNIT 10 // TEMP
 
 
 
@@ -130,7 +130,7 @@ void fillFromQueue (std::vector<uint8_t>& signalPCM, // of the right size
 
 
 
-
+/*
 
 typedef struct WAV_HEADER {
     // RIFF Chunk Descriptor
@@ -197,3 +197,6 @@ int main() {
 
     return 0;
 };
+
+*/
+
