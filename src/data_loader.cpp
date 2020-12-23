@@ -13,8 +13,8 @@
  * @param conversion_map Conversion map to fill
  * @param fill_filepath Path of file containing map information
  */
-void fill_conversion_map (std::map<std::string, std::string>& conversion_map,
-                          const std::string& fill_filepath) {
+void fillConversionMap (std::map<std::string, std::string>& conversion_map,
+                        const std::string& fill_filepath) {
 
     // Open the conversion file
     std::ifstream file_in;
