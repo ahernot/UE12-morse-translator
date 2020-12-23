@@ -7,3 +7,5 @@ t
 .idea
 morse.dSYM/*
 build/*
+*.a
+output/*.wav
