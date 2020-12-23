@@ -10,8 +10,8 @@
 
 int main () {
 
+    const std::string outFilePath = "output/output.wav";
 
-    
 
 
 
