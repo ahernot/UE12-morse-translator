@@ -1,4 +1,4 @@
-# UE12 – Morse Translator (v0.3)
+# UE12 – Morse Translator (v0.4)
 Project due 2021.01.24
 
 <br><br>
@@ -14,14 +14,23 @@ Project due 2021.01.24
 * v0.1 (2020.12.19): Begin project, create text->Morse conversion functions
 * v0.2 (2020.12.20): Create Morse->signal conversion function with smart support for spaces
 * v0.3 (2020.12.23): Create signal->WAV conversion function, reorganise into package structure
+* v0.4 (2020.12.24): Create WAV->PCMvector conversion function, clarify program roadmap
 
 <br><br>
 
 ## To do
 * v0.4: Implement .wav file reading (WAV->PCMvector)
 * v0.5: Implement backwards conversion (PCMvector->text)
-* v2: Use json files or equivalent for conversion maps storage (or archive using `boost::archive::text_oarchive`)
-* v2: Deal with accentuated characters better
+* v0.6: Use vectors instead of queues, clean up variables and variable names, and use constants whenever possible
+* v0.7: Check support of customized sample rates
+* v0.8: Add support for different encoding options (TIME_UNIT, …) throughout the functions
+* v1.1: Add WAV header reading
+* v1.2: Add auto timestep recognition thanks to a 1111 0000 1111 zone at the beginning of the file
+* v1.3: Add higher bitrate support
+* v1.4: Add multi-channel support
+* v2.0: Use json files or equivalent for conversion maps storage (or archive using `boost::archive::text_oarchive`)
+* v2.0: Deal with accentuated characters better
+* v2.1: Add support for smoother signal types (sine waves, …)
 * add `-std=$(CPP)` in makefile?
 
 
