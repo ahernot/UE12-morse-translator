@@ -19,7 +19,6 @@ Project due 2021.01.24
 <br><br>
 
 ## To do
-* v0.4: Implement .wav file reading (WAV->PCMvector)
 * v0.5: Implement backwards conversion (PCMvector->text)
 * v0.6: Use vectors instead of queues, clean up variables and variable names, and use constants whenever possible
 * v0.7: Check support of customized sample rates
