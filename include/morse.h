@@ -1,4 +1,5 @@
 #include <string>
+#include <vector>
 #include <map>
 #include <queue>
 
@@ -13,3 +14,6 @@ void stringToMorse (std::string& message,
                     std::queue<std::string>& conversionQueue,
                     std::map<std::string, std::string>& conversionMap,
                     std::map<std::string, std::string>& preconversionMap = emptyMap);
+
+std::string morseToString (std::vector<std::string>& messageVector,
+                           std::map<std::string, std::string> conversionMap);
