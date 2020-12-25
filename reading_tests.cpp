@@ -78,7 +78,7 @@ float calcPseudoFrequencySquare (uint8_t dataUnit [],
 
 int main () {
 
-    std::string inFilePath = "output/hello-world.wav";
+    std::string inFilePath = "output/output.wav";
 
     // Create input file stream
     std::ifstream inFile;
