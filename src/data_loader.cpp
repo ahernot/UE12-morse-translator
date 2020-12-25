@@ -34,8 +34,6 @@ void fillConversionMap (std::map<std::string, std::string>& conversion_map,
         file_in >> sequence >> letter;
     };
     
-    //std::cout << letter << " = " << sequence << std::endl;
-
     // Write to the map
     conversion_map[letter] = sequence;
     
