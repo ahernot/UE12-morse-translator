@@ -1,4 +1,4 @@
-# UE12 – Morse Translator (v0.4)
+# UE12 – Morse Translator (v0.5)
 Project due 2021.01.24
 
 <br><br>
@@ -11,26 +11,27 @@ Project due 2021.01.24
 <br><br>
 
 ## Changelog
-* v0.1 (2020.12.19): Begin project, create text->Morse conversion functions
-* v0.2 (2020.12.20): Create Morse->signal conversion function with smart support for spaces
-* v0.3 (2020.12.23): Create signal->WAV conversion function, reorganise into package structure
-* v0.4 (2020.12.24): Create WAV->PCMvector conversion function, clarify program roadmap
+* v0.1 (2020.12.19): Begin project, create text->Morse conversion functions.
+* v0.2 (2020.12.20): Create Morse->signal conversion function with smart support for spaces.
+* v0.3 (2020.12.23): Create signal->WAV conversion function, reorganise into package structure.
+* v0.4 (2020.12.24): Create WAV->PCMvector conversion function, clarify program roadmap.
+* v0.5 (2020.12.25): Implement PCMvector->text conversion, clean up program. Enter beta phase.
 
 <br><br>
 
 ## To do
-* v0.5: Implement backwards conversion (PCMvector->text)
-* v0.6: Use vectors instead of queues, clean up variables and variable names, and use constants whenever possible
-* v0.7: Check support of customized sample rates
-* v0.8: Add support for different encoding options (TIME_UNIT, …) throughout the functions
-* v1.1: Add WAV header reading
-* v1.2: Add auto timestep recognition thanks to a 1111 0000 1111 zone at the beginning of the file
-* v1.3: Add higher bitrate support
-* v1.4: Add multi-channel support
-* v2.0: Use json files or equivalent for conversion maps storage (or archive using `boost::archive::text_oarchive`)
-* v2.0: Deal with accentuated characters better
-* v2.1: Add support for smoother signal types (sine waves, …)
-* add `-std=$(CPP)` in makefile?
+* v0.6: Use vectors instead of queues, clean up variables and variable names, and use constants whenever possible, write docstrings.
+* v0.7: Check support of customized sample rates.
+* v0.8: Add support for different encoding options (TIME_UNIT, …) throughout the functions.
+* v0.9: Add documentation and a wiki.
+* v1.1: Add WAV header reading.
+* v1.2: Add auto timestep recognition thanks to a 1111 0000 1111 zone at the beginning of the file.
+* v1.3: Add higher bitrate support.
+* v1.4: Add multi-channel support.
+* v2.0: Use json files or equivalent for conversion maps storage (or archive using `boost::archive::text_oarchive`).
+* v2.0: Deal with accentuated characters better.
+* v2.1: Add support for smoother signal types (sine waves, …).
+* Add `-std=$(CPP)` in makefile?
 
 
 <br><br>
@@ -95,3 +96,9 @@ and the number, once assembled, should read 2 $\|$ 1 $\|$ 0 (24-bit signal)
 
 The `std::vector::size` function gets the size of a C++ object (`vector.size()` will return the number of elements in `vector`). The `sizeof()` function returns the bit size of the element at the pointer address of the object (hence, for a vector or any other 'recurrent' data structure, it is much lesser than the actual bit size of the whole object).
 <br>Cannot include twice the same file "*.h"
+
+<br>
+
+Useful links
+* types: https://en.cppreference.com/w/cpp/types/integer
+* binary file I/O: https://courses.cs.vt.edu/~cs2604/fall00/binio.html
