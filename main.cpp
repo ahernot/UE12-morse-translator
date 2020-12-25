@@ -58,16 +58,24 @@ int main () {
     std::map<std::string, std::string> conversionMap;
     fillConversionMap (conversionMap, "resources/conversion.txt");
 
+    // Generate the conversion map
+    std::map<std::string, std::string> returnMap;
+    fillConversionMap (conversionMap, "resources/conversion.txt", true);
+
 
 
 
 
     // Convert text to Morse audio file
-    std::string message = "Hello World";
+    std::string outMessage = "Joyeux Noel";
     const std::string outFilePath = "output/output.wav";
-    textToMorseAudio(message, outFilePath, conversionMap, preconversionMap);
+    textToMorseAudio(outMessage, outFilePath, conversionMap, preconversionMap);
 
-    
+
+    // Convert Morse audio file to text
+    const std::string inFilePath = "output/output.wav";
+    std::string inMessage;
+    //morseAudioToText(inMessage, inFilePath, )
 
     return 0;
 };
