@@ -12,9 +12,11 @@
  *
  * @param conversion_map Conversion map to fill
  * @param fill_filepath Path of file containing map information
+ * @param reverseOrder Reverse order of map
  */
 void fillConversionMap (std::map<std::string, std::string>& conversion_map,
-                        const std::string& fill_filepath) {
+                        const std::string& fill_filepath,
+                        const bool& reverseOrder) {
 
     // Open the conversion file
     std::ifstream file_in;
@@ -25,7 +27,13 @@ void fillConversionMap (std::map<std::string, std::string>& conversion_map,
     std::string letter; std::string sequence;
 
     // Get the first line
-    file_in >> letter >> sequence;
+    if (reverseOrder == false) {
+        file_in >> letter >> sequence;
+    }
+    else {
+        file_in >> sequence >> letter;
+    };
+    
     //std::cout << letter << " = " << sequence << std::endl;
 
     // Write to the map
@@ -35,8 +43,12 @@ void fillConversionMap (std::map<std::string, std::string>& conversion_map,
     while (std::getline(file_in, line)) {
         
         // Read the line
-        file_in >> letter >> sequence;
-        //std::cout << letter << " = " << sequence << std::endl;
+        if (reverseOrder == false) {
+            file_in >> letter >> sequence;
+        }
+        else {
+            file_in >> sequence >> letter;
+        };
 
         // Write to the map
         conversion_map[letter] = sequence;
