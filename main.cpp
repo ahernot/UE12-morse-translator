@@ -21,18 +21,18 @@ void textToMorseAudio (std::string& text, // cannot be const because of iterator
                        std::map<std::string, std::string> conversionMap,
                        std::map<std::string, std::string> preconversionMap) {
     
-    // Convert from text to morse sequence
+    // Convert from text to morse sequence (in morse.cpp)
     std::queue<std::string> conversionQueue;
     stringToMorse(text, conversionQueue, conversionMap, preconversionMap);
 
     
-    // Convert from morse sequence to signal bytestream queue (empties conversionQueue)
+    // Convert from morse sequence to signal bytestream queue (empties conversionQueue) (in signal_gen.cpp)
     std::queue<bool> signalQueue;
     //signalQueue.push(true); signalQueue.push(false); signalQueue.push(true); signalQueue.push(false); signalQueue.push(true); signalQueue.push(false); signalQueue.push(true); signalQueue.push(false); signalQueue.push(true); signalQueue.push(false);
     queueToSignal(conversionQueue, signalQueue);
 
 
-    // Generate PCM signal to include into WAV file
+    // Generate PCM signal to include into WAV file (in pcm.cpp)
     const int samplesPerUnit = SAMPLE_RATE * TIME_UNIT / 1000;
     const int unitNb = signalQueue.size();
     const int signalSize = samplesPerUnit * unitNb * CHANNEL_NB;
@@ -40,18 +40,16 @@ void textToMorseAudio (std::string& text, // cannot be const because of iterator
     fillFromQueue (signalPCM, signalQueue, FREQUENCY, SAMPLE_RATE);
 
     
-    // Generate WAV file
+    // Generate WAV file (in wav.cpp)
     generateWAV (signalPCM, outFilePath);
 
 };
 
 
 
-void morseAudioToText (const std::string& inFilePath,
-                       std::string& inMessage,
-                       std::map<std::string, std::string> returnMap) {
-
-    //std::vector<uint8_t> signalPCM;
+std::string morseAudioToText (const std::string& inFilePath,
+                              std::string& inMessage,
+                              std::map<std::string, std::string> returnMap) {
 
     // Read from WAV file and fill signalVector (in wav.cpp)
     std::vector<bool> signalVector;
@@ -64,9 +62,10 @@ void morseAudioToText (const std::string& inFilePath,
     std::vector<std::string> messageVector;
     fillFromSignal(signalVector, messageVector, unitNb);
 
-    for (std::vector<std::string>::iterator it = messageVector.begin(); it < messageVector.end(); it ++) {
-        std::cout << *it << std::endl;
-    };
+    // Convert from Morse to text (in morse.cpp)
+    std::string message = morseToString(messageVector, returnMap);
+
+    return message;
 
 };
 
@@ -85,22 +84,27 @@ int main () {
 
     // Generate the conversion map
     std::map<std::string, std::string> returnMap;
-    fillConversionMap (conversionMap, "resources/conversion.txt", true);
+    fillConversionMap (returnMap, "resources/conversion.txt", true);
 
+    // --------
 
-
-
-
+    /*
     // Convert text to Morse audio file
-    //std::string outMessage = "Joyeux Noel";
-    //const std::string outFilePath = "output/output.wav";
-    //textToMorseAudio(outMessage, outFilePath, conversionMap, preconversionMap);
+    std::string outMessage = "Joyeux Noel";
+    const std::string outFilePath = "output/output.wav";
+    textToMorseAudio(outMessage, outFilePath, conversionMap, preconversionMap);
+    */
 
+    // --------
 
+    /*
     // Convert Morse audio file to text
     const std::string inFilePath = "output/output.wav";
-    std::string inMessage;
-    morseAudioToText(inFilePath, inMessage, returnMap);
+    std::string inMessage = morseAudioToText(inFilePath, inMessage, returnMap);
+    std::cout << "output: " << inMessage << std::endl;
+    */
+
+    // --------
 
     return 0;
 };
