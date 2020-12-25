@@ -60,3 +60,33 @@ void stringToMorse (std::string& message,
         
     };
 };
+
+
+/*
+void morseToString (std::vector<std::string>& messageVector,
+                    std::string& message,
+                    std::map<std::string, std::string> conversionMap) {
+
+    // convert "__space__" and "__fullstop__" into their respective items
+
+    // Loop through the characters in the message string
+    for (std::vector<std::string>::iterator it = messageVector.begin(); it != messageVector.end(); it++) {
+
+        // Convert from char to string
+        std::string c; c = *it;
+
+        // Convert characters
+        if (c == " ") {
+            conversionQueue.push(space); // space (word break)
+        }
+        else if (c == ".") {
+            conversionQueue.push(fullstop); // fullstop (sentence break)
+        }
+        else {
+            std::string cc = charToMorse(c, conversionMap, preconversionMap);
+            conversionQueue.push(cc);
+        };
+        
+    };
+};
+*/

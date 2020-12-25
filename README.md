@@ -93,4 +93,5 @@ and the number, once assembled, should read 2 $\|$ 1 $\|$ 0 (24-bit signal)
 
 ## Random notes
 
-The `.size` function gets the size of a C++ object (`vector.size()` will return the number of elements in `vector`). The `sizeof()` function returns the bit size of the element at the pointer address of the object (hence, for a vector or any other 'recurrent' data structure, it is much lesser than the actual bit size of the whole object).
+The `std::vector::size` function gets the size of a C++ object (`vector.size()` will return the number of elements in `vector`). The `sizeof()` function returns the bit size of the element at the pointer address of the object (hence, for a vector or any other 'recurrent' data structure, it is much lesser than the actual bit size of the whole object).
+<br>Cannot include twice the same file "*.h"

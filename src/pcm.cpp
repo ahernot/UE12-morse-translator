@@ -10,6 +10,7 @@ This file handles encoding to and decoding from the PCM format.
 #include <queue>
 
 #include "config.h"
+#include "func.h"
 
 
 
@@ -65,6 +66,7 @@ void fillFreqSquare (std::vector<uint8_t>& signalPCM,
 
 
 
+
 // chunk of frequency when true, chunk of nothing when false
 // one channel, amplitude is 255
 // requirement (Nyquist-Shannon): frequency * 2 < sampleRate
@@ -115,4 +117,132 @@ void fillFromQueue (std::vector<uint8_t>& signalPCM, // of the right size
 
         
     };
+};
+
+
+
+
+
+void fillFromSignal (std::vector<bool>& signalVector,
+                     std::vector<std::string>& messageVector,
+                     const int& unitNb) {
+
+    int lowSize = 0; // size of gap (false)
+    int highSize = 0; // size of signal (true)
+
+    // Initialise temporary character vector
+    std::vector<char> tempChar;
+
+    // Run through bool vector
+    for (int unitIndex = 0; unitIndex < unitNb; unitIndex ++) {
+
+        // Read data
+        bool signalBool = signalVector[unitIndex];
+
+
+        // In gap
+        if (signalBool == false) {
+
+            if (highSize != 0) {
+
+                // Save symbol to tempChar (impulses <=1 are dots; impulses >1 are dashes)
+                if (highSize <= 1) {
+                    tempChar.push_back('0');
+                }
+                else {
+                    tempChar.push_back('1');
+                };
+
+                // Reset highSize
+                highSize = 0;
+            };
+
+            // Increment lowSize
+            lowSize ++;
+        }
+
+
+        // End of gap
+        else {
+
+            // Add gap
+            if (lowSize != 0) {
+
+                // Symbol space (within same character) -- do nothing
+                if (lowSize == XCHAR_BREAK_TIME) {}
+
+                // Spacing character (default: character space)
+                else {
+
+                    // Save tempChar to main vector if not empty
+                    if (!tempChar.empty()) {
+
+                        // Convert tempChar vector to string
+                        std::string tempString (tempChar.begin(), tempChar.end());
+
+                        // Add tempChar to main vector
+                        messageVector.push_back(tempString);
+
+                        // Reset tempChar
+                        clear(tempChar);
+                    };
+
+                    // Process breakString
+                    if (lowSize >= SENTENCE_BREAK_TIME) { // Sentence break (fullstop)
+                        std::string breakString = "__fullstop__";
+
+                        // Add breakString to main vector
+                        messageVector.push_back(breakString);
+                    }
+                    else if (lowSize >= WORD_BREAK_TIME) { // Word space
+                        std::string breakString = "__space__"; // and "__space__"
+                        
+                        // Add breakString to main vector
+                        messageVector.push_back(breakString);
+                    };  
+                };
+
+                // Reset lowSize
+                lowSize = 0;
+
+            };
+
+            // Increment highSize
+            highSize ++;
+            
+        };
+
+
+    };
+
+
+    // Process last char, if any
+    if (highSize != 0) {
+
+        // Save symbol to tempChar (impulses <=1 are dots; impulses >1 are dashes)
+        if (highSize <= 1) {
+            tempChar.push_back('0');
+        }
+        else {
+            tempChar.push_back('1');
+        };
+
+        // Reset highSize
+        highSize = 0;
+    };
+
+    // Save tempChar to main vector if not empty
+    if (!tempChar.empty()) {
+
+        // Convert tempChar vector to string
+        std::string tempString (tempChar.begin(), tempChar.end());
+
+        // Add tempChar to main vector
+        messageVector.push_back(tempString);
+
+        // Reset tempChar
+        clear(tempChar);
+    };
+
+
 };

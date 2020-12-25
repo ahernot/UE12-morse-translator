@@ -33,6 +33,52 @@ typedef struct WAV_HEADER {
 
 
 
+float calcPseudoFrequencySquare (uint8_t dataUnit [],
+                                 const int unitSize,
+                                 const int sampleRate,
+                                 const int low,
+                                 const int high) {
+
+    // This calculates the average frequency in a square signal with one high surrounded by lows
+
+    float averageGap = 0;
+    int averageId = 1;
+    int tempGap = 0;
+
+    for (int i = 0; i < unitSize; i ++) {
+
+        // Read data
+        uint8_t data = dataUnit[i];
+        int dataInt = (int) data;
+
+        //std::cout << "   data: " << dataInt << std::endl;
+
+        if (dataInt == high) {
+            //std::cout << "      is high" << std::endl;
+            averageGap = (averageId * averageGap + tempGap) / (averageId + 1); // add to average
+            averageId ++; // increment nb of elements averaged
+            tempGap = 0; // reset gap
+        }
+        else {
+            //std::cout << "      is low" << std::endl;
+            tempGap ++;
+        };
+
+        //std::cout << averageGap << std::endl;
+    };
+
+    float pseudoFrequency = sampleRate / averageGap;
+
+    if (isinf(pseudoFrequency)) {
+        return 0;
+    };
+
+    return pseudoFrequency;
+
+};
+
+
+
 
 
 void generateWAV (std::vector<uint8_t>& signalPCM, // cannot put const :(
@@ -70,47 +116,67 @@ void generateWAV (std::vector<uint8_t>& signalPCM, // cannot put const :(
 
 
 
+void readWAV (const std::string& inFilePath,
+              std::vector<bool>& signalVector,
+              const int frequency,
+              const int sampleRate,
+              const int timeUnit,
+              const int headerSizeBytes) {
+    
+    // Create input file stream
+    std::ifstream inFile;
+
+    // Open file in binary mode
+    inFile.open(inFilePath, std::ios::binary);
+
+    // Get size of file in bytes
+    inFile.seekg(0, std::ios::end); // place pointer at end of file
+    int inSizeBytes = inFile.tellg(); // read pointer position
+    int signalSizeBytes = inSizeBytes - headerSizeBytes; // can be used to generate signalVector of the right size
 
 
-/*
+    /*
+    Build a function to read the WAV header
+    */    
+    
+
+    // Calculate constants
+    const int samplesPerUnit = sampleRate * timeUnit / 1000;
+    const int bytesPerUnit = samplesPerUnit * 1;
+
+    // Compute frequency acceptability range
+    const int freqError = frequency * 0.1; // 10% error
+    const int freqLower = frequency - freqError;
+    const int freqUpper = frequency + freqError;
+    
+    // Calculate number of units in signal
+    int unitNb = floor(signalSizeBytes / bytesPerUnit);
+
+    // Set pointer after WAV header
+    inFile.seekg(headerSizeBytes); // 44
 
 
-// main function just for tests
-int main() {
+    for (int unitIndex = 0; unitIndex < unitNb; unitIndex ++) {
+        
+        // Create unit array
+        uint8_t dataUnit [samplesPerUnit];
+        
+        // Read file
+        inFile.read(reinterpret_cast<char*>(&dataUnit), samplesPerUnit);
 
-    int sampleNb = 220500;
-    int channelNb = 1;
+        // Calculate pseudofrequency
+        float pseudoFrequency = calcPseudoFrequencySquare(dataUnit, samplesPerUnit, sampleRate, 0, 255);
 
-    int vectorSize = sampleNb * channelNb;
-    std::vector<uint8_t> signalPCM (vectorSize); // Initialise signal vector
-    //generateNoise(signalPCM, 0, sampleNb, channelNb); // Fill signal vector with random noise
-    fillFreqSquare(signalPCM, 0, sampleNb, 440, 44100, 255, 1);
+        // Compare read frequency and add to signalVector
+        if ((pseudoFrequency >= freqLower) && (pseudoFrequency <= freqUpper)) {
+            signalVector.push_back(true);
+        }
+        else {
+            signalVector.push_back(false);
+        };
 
-
-
-
-    static_assert(sizeof(wav_hdr) == 44, "");
-    uint32_t fsize = signalPCM.size() * 8; // size in bits | in.tellg(); // get position of pointer (last element)
-
-    //in.seekg(0, std::ios::end);
-    //fsize = (uint32_t)in.tellg() - fsize;
-    //in.seekg(0, std::ios::beg);
-
-    printf("file size: %u\n", fsize);
-
-    wav_hdr wav;
-    wav.riffChunkSize = fsize + sizeof(wav_hdr) - 8;
-    wav.dataChunkSize = fsize + sizeof(wav_hdr) - 44;
-
-    std::ofstream out("out/outpcm.wav", std::ios::binary);
-    out.write(reinterpret_cast<const char *>(&wav), sizeof(wav));
-
-
-    for (std::vector<uint8_t>::iterator it = signalPCM.begin(); it != signalPCM.end(); it++) {
-        out.write(reinterpret_cast<const char*>(&*it), sizeof(uint8_t)); // sizeof(uint8_t) = 1 (size in bytes)
     };
 
-
-    return 0;
+    // Close input file
+    inFile.close();
 };
-*/

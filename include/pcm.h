@@ -21,3 +21,7 @@ void fillFromQueue (std::vector<uint8_t>& signalPCM,
                     std::queue<bool>& signalQueue,
                     const int& frequency = FREQUENCY,
                     const int& sampleRate = SAMPLE_RATE);
+
+void fillFromSignal (std::vector<bool>& signalVector,
+                     std::vector<std::string>& messageVector,
+                     const int& unitNb);

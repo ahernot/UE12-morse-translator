@@ -47,6 +47,31 @@ void textToMorseAudio (std::string& text, // cannot be const because of iterator
 
 
 
+void morseAudioToText (const std::string& inFilePath,
+                       std::string& inMessage,
+                       std::map<std::string, std::string> returnMap) {
+
+    //std::vector<uint8_t> signalPCM;
+
+    // Read from WAV file and fill signalVector (in wav.cpp)
+    std::vector<bool> signalVector;
+    readWAV(inFilePath, signalVector);
+
+    // Get size of signalVector
+    const int unitNb = signalVector.size();
+
+    // Read from signalVector (in pcm.cpp)
+    std::vector<std::string> messageVector;
+    fillFromSignal(signalVector, messageVector, unitNb);
+
+    for (std::vector<std::string>::iterator it = messageVector.begin(); it < messageVector.end(); it ++) {
+        std::cout << *it << std::endl;
+    };
+
+};
+
+
+
 
 int main () {
 
@@ -67,15 +92,15 @@ int main () {
 
 
     // Convert text to Morse audio file
-    std::string outMessage = "Joyeux Noel";
-    const std::string outFilePath = "output/output.wav";
-    textToMorseAudio(outMessage, outFilePath, conversionMap, preconversionMap);
+    //std::string outMessage = "Joyeux Noel";
+    //const std::string outFilePath = "output/output.wav";
+    //textToMorseAudio(outMessage, outFilePath, conversionMap, preconversionMap);
 
 
     // Convert Morse audio file to text
     const std::string inFilePath = "output/output.wav";
     std::string inMessage;
-    //morseAudioToText(inMessage, inFilePath, )
+    morseAudioToText(inFilePath, inMessage, returnMap);
 
     return 0;
 };
