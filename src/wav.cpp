@@ -9,7 +9,6 @@
 #include <vector>
 
 #include "config.h"
-
 #include "signal_processing.h"
 
 
