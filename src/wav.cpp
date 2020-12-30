@@ -9,7 +9,7 @@
 #include <vector>
 
 #include "config.h"
-#include "signal_processing.h"
+#include "signal_processing.h" // calcPseudoFrequencySquare
 
 
 typedef struct WAV_HEADER {
