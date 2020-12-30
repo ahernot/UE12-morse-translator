@@ -1,3 +1,7 @@
+/**
+ * Signal analysis
+ */
+
 #include <iostream>
 
 /**
