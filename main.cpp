@@ -15,9 +15,17 @@
 
 
 
-
-void textToMorseAudio (std::string& text, // cannot be const because of iterator
-                       const std::string outFilePath,
+/**
+ * Convert from text to morse audio file in the specified path
+ *
+ * @param text text to convert
+ * @param outFilePath path of output file
+ * @param conversionMap character conversion map (text->morse)
+ * @param preconversionMap character preconversion map (text->text)
+ * @return
+ */
+void textToMorseAudio (std::string& text,
+                       const std::string& outFilePath,
                        std::map<std::string, std::string> conversionMap,
                        std::map<std::string, std::string> preconversionMap) {
     
@@ -28,7 +36,6 @@ void textToMorseAudio (std::string& text, // cannot be const because of iterator
     
     // Convert from morse sequence to signal bytestream queue (empties conversionQueue) (in signal_gen.cpp)
     std::queue<bool> signalQueue;
-    //signalQueue.push(true); signalQueue.push(false); signalQueue.push(true); signalQueue.push(false); signalQueue.push(true); signalQueue.push(false); signalQueue.push(true); signalQueue.push(false); signalQueue.push(true); signalQueue.push(false);
     queueToSignal(conversionQueue, signalQueue);
 
 
@@ -42,13 +49,18 @@ void textToMorseAudio (std::string& text, // cannot be const because of iterator
     
     // Generate WAV file (in wav.cpp)
     generateWAV (signalPCM, outFilePath);
-
 };
 
 
 
+/**
+ * Convert from morse audio file to text
+ *
+ * @param inFilePath path of morse audio file
+ * @param returnMap character conversion map (morse->text)
+ * @return converted text
+ */
 std::string morseAudioToText (const std::string& inFilePath,
-                              std::string& inMessage,
                               std::map<std::string, std::string> returnMap) {
 
     // Read from WAV file and fill signalVector (in wav.cpp)
@@ -66,7 +78,6 @@ std::string morseAudioToText (const std::string& inFilePath,
     std::string message = morseToString(messageVector, returnMap);
 
     return message;
-
 };
 
 
@@ -86,7 +97,9 @@ int main () {
     std::map<std::string, std::string> returnMap;
     fillConversionMap (returnMap, "resources/conversion.txt", true);
 
+
     // --------
+
 
     /*
     // Convert text to Morse audio file
@@ -100,11 +113,13 @@ int main () {
     /*
     // Convert Morse audio file to text
     const std::string inFilePath = "output/output.wav";
-    std::string inMessage = morseAudioToText(inFilePath, inMessage, returnMap);
+    std::string inMessage = morseAudioToText(inFilePath, returnMap);
     std::cout << "output: " << inMessage << std::endl;
     */
 
+
     // --------
+
 
     return 0;
 };
