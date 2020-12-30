@@ -1,16 +1,20 @@
 /**
- * Signal analysis
+ * This file handles signal analysis
  */
 
 #include <iostream>
 
 /**
  * Calculate pseudo-frequency of square signal (binary HIGH/LOW signal)
- * 
- * 
+ * @param dataUnit array of data to analyse
+ * @param unitSize size of unit
+ * @param sampleRate
+ * @param low
+ * @param high
+ * @return pseudo-frequency of input square signal
  */
 float calcPseudoFrequencySquare (uint8_t dataUnit [],
-                                 const int& unitSize,
+                                 const int& unitSize, // needed?
                                  const int& sampleRate,
                                  const int& low,
                                  const int& high) {
@@ -45,5 +49,4 @@ float calcPseudoFrequencySquare (uint8_t dataUnit [],
     };
 
     return pseudoFrequency;
-
 };
