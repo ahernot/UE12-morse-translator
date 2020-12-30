@@ -3,12 +3,6 @@
 
 #include "config.h"
 
-float calcPseudoFrequencySquare (uint8_t dataUnit [],
-                                 const int& unitSize,
-                                 const int& sampleRate,
-                                 const int& low,
-                                 const int& high);
-
 void generateWAV (std::vector<uint8_t>& signalPCM,
                   const std::string& outFilePath);
 
