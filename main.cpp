@@ -112,7 +112,7 @@ int main () {
 
     /*
     // Convert Morse audio file to text
-    const std::string inFilePath = "output/output.wav";
+    const std::string inFilePath = "output/hello-world.wav";
     std::string inMessage = morseAudioToText(inFilePath, returnMap);
     std::cout << "output: " << inMessage << std::endl;
     */
